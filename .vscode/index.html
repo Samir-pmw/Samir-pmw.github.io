@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Portifólio de Samir Batista dos Santos" />
+    <title>Samir Batista dos Santos</title>
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Botão de Light/Dark Mode -->
+    <button id="theme-toggle">💡</button>
+    <button id="translate-toggle">🌐</button>
+    <div id="container">
+      <!-- Mensagem de "Copiado" -->
+      <div id="copy-message">Copiado!</div>
+
+      <header>
+        <div id="profile">
+          <img src="profile.jpg" alt="Foto de perfil" />
+        </div>
+        <h1>Samir Batista dos Santos</h1>
+        <p>Brasil</p>
+        <div id="social-icons">
+          <a href="#" id="discord-link"
+            ><img src="icons/discord.png" alt="Discord"
+          /></a>
+          <a href="https://github.com/Samir-pmw" target="_blank"
+            ><img src="icons/github.png" alt="GitHub"
+          /></a>
+          <a href="#" id="gmail-link"
+            ><img src="icons/gmail.png" alt="Gmail"
+          /></a>
+          <a href="#" id="instagram-link"
+            ><img src="icons/instagram.png" alt="Instagram"
+          /></a>
+          <a
+            href="https://www.linkedin.com/in/samir-batista-517139217/"
+            target="_blank"
+            ><img src="icons/linkedin.png" alt="LinkedIn"
+          /></a>
+        </div>
+      </header>
+
+      <nav>
+        <ul>
+          <li><a href="#sobre">SOBRE</a></li>
+          <li><a href="#portfolio">PORTIFÓLIO</a></li>
+          <li><a href="#conquistas">CONQUISTAS</a></li>
+        </ul>
+      </nav>
+
+      <section id="sobre">
+        <h2>SOBRE</h2>
+        <p id="sobre-texto">
+          Um programador com anos de experiência em programação e estudante de
+          Ciências da Computação na Universidade Federal do Tocantins. Esse site
+          é o meu portifólio e contém resumos, códigos e links para contato em
+          diversas redes sociais.
+        </p>
+      </section>
+
+      <section id="portfolio">
+        <h2>PORTIFÓLIO</h2>
+        <div id="repositories"></div>
+        <button id="add-project-button" style="display: none">
+          Adicionar Projeto
+        </button>
+      </section>
+
+      <section id="conquistas">
+        <h2>CONQUISTAS E CERTIFICADOS</h2>
+        <div id="achievements"></div>
+        <button id="add-achievement-button" style="display: none">
+          Adicionar Conquista/Certificado
+        </button>
+      </section>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
