@@ -16,6 +16,7 @@
     <!-- Botão de Light/Dark Mode -->
     <button id="theme-toggle">💡</button>
     <button id="translate-toggle">🌐</button>
+    <button id="export-data" style="display: none;">Exportar Dados</button>
     <div id="container">
       <!-- Mensagem de "Copiado" -->
       <div id="copy-message">Copiado!</div>
@@ -82,5 +83,8 @@
       </section>
     </div>
     <script src="./script.js"></script>
+    <script>
+      document.getElementById('export-data').addEventListener('click', exportData);
+    </script>
   </body>
 </html>
