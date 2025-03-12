@@ -17,13 +17,13 @@ document.addEventListener("DOMContentLoaded", function () {
     location: "Brasil",
     aboutTitle: "SOBRE",
     aboutText:
-      "Um programador com anos de experiência em programação e estudante de Ciências da Computação na Universidade Federal do Tocantins. Esse site é o meu portifólio e contém resumos, códigos e links para contato em diversas redes sociais.",
-    portfolioTitle: "PORTIFÓLIO",
+      "Um programador com anos de experiência em programação e estudante de Ciências da Computação na Universidade Federal do Tocantins. Esse site é o meu portfólio e contém resumos, códigos e links para contato em diversas redes sociais.",
+    portfolioTitle: "PORTFÓLIO",
     addProjectButton: "Adicionar Projeto",
     achievementsTitle: "CONQUISTAS E CERTIFICADOS",
     addAchievementButton: "Adicionar Conquista/Certificado",
     navAbout: "SOBRE",
-    navPortfolio: "PORTIFÓLIO",
+    navPortfolio: "PORTFÓLIO",
     navAchievements: "CONQUISTAS",
   };
 
