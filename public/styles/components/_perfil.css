@@ -1,0 +1,155 @@
+/* --- Layout Principal --- */
+.perfil {
+    max-width: 1170px;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: clamp(16px, 4vw, 64px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(16px, 3vw, 24px);
+    position: relative;
+}
+
+/* --- Animação de Scroll --- */
+.js-reveal,
+.js-reveal-up {
+    opacity: 0;
+    filter: blur(5px);
+    /* ATUALIZADO: Duração da transição reduzida para 0.4s */
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out, filter 0.4s ease-out;
+    will-change: opacity, transform, filter;
+}
+
+.js-reveal {
+    transform: translateY(-20px);
+}
+
+.js-reveal-up {
+    transform: translateY(20px);
+}
+
+.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+}
+
+/* --- Componentes do Perfil --- */
+.perfil__foto {
+    width: clamp(160px, 30vw, 280px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #3a3a3a;
+    box-shadow: 0 0 0 4px var(--cor-fundo), 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.perfil__cargo {
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 500;
+    color: #a0a0a0;
+    margin: 0;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 300px;
+}
+
+.cursor {
+    background-color: #a0a0a0;
+    animation: blink 1s step-end infinite;
+    margin-left: 4px;
+    width: 2px;
+    height: 1em;
+}
+
+.perfil__titulo {
+    color: var(--cor-texto);
+    font-size: clamp(32px, 6vw, 64px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin: 0;
+}
+
+.perfil__localizacao {
+    font-size: clamp(14px, 2vw, 16px);
+    color: #888;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.perfil__localizacao svg {
+    fill: #888;
+}
+
+.perfil__redes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.perfil__redes a {
+    display: inline-block;
+    transition: transform 0.2s ease-in-out;
+    will-change: transform;
+}
+
+.perfil__redes img {
+    width: clamp(32px, 5vw, 40px);
+    transform-origin: center;
+    transition: transform 160ms ease;
+}
+
+.perfil__redes a:hover img,
+.perfil__redes a:focus-visible img {
+    transform: scale(1.15);
+}
+
+:root {
+    --perfil-icon-color: #f5f5f5; /* pastel white */
+}
+
+.perfil__redes svg {
+    width: clamp(32px, 5vw, 40px);
+    height: auto;
+    fill: var(--perfil-icon-color);
+    color: var(--perfil-icon-color);
+    transition: transform 160ms ease;
+}
+
+/* Se quiser leve destaque no hover */
+.perfil__redes a:hover svg,
+.perfil__redes a:focus-visible svg {
+    transform: scale(1.15);
+}
+
+/* Indicador de Scroll */
+.scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #888;
+    animation: subtle-float 2.5s ease-in-out infinite;
+}
+
+.scroll-indicator__arrow {
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid #888;
+    border-right: 2px solid #888;
+    transform: rotate(45deg);
+}

@@ -1,0 +1,432 @@
+/* Títulos da seção de projetos */
+.page-title {
+    font-size: 4.5rem;
+    text-align: center;
+    margin-top: -4rem;
+    margin-bottom: 3.5rem;
+    color: var(--cor-texto);
+}
+
+/* Cards */
+:root {
+  --card-height: 300px;
+  --card-width: calc(var(--card-height) / 1.5);
+  --tilt-max: 2;            /* força ainda menor para o tilt */
+  --card-translate: 4px;    /* deslocamento reduzido do cartão (px) */
+  --tilt-z: 8px;            /* positivo: imagem aproxima levemente em direção ao mouse */
+  --cover-position: center 40%; /* ponto focal padrão para evitar cortes verticais excessivos */
+}
+* {
+  box-sizing: border-box;
+}
+.card {
+  /* layout inspirado no exemplo 3D/NFT - titulo/cover alinhados na base */
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* importante para o mesmo comportamento visual */
+  padding: 0 36px;
+  perspective: 1000px;
+  margin: 0 28px;
+  overflow: hidden; /* garante que badges/tags não escapem dos cantos arredondados */
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
+  /* border removida do .card para acompanhar o wrapper (veja .wrapper abaixo) */
+   box-shadow: 0 8px 24px rgba(0,0,0,0.45);
+   transition: transform 360ms cubic-bezier(.16,1,.3,1), box-shadow 320ms ease, filter 320ms ease;
+   transform-origin: center center;
+   will-change: transform;
+}
+
+/* wrapper atua como máscara/clipping para a capa */
+.wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;        /* clipping com border-radius do .card */
+  border-radius: inherit;
+  z-index: 0;
+  transform-style: preserve-3d;
+  transform-origin: top center;
+  will-change: transform;
+transition: transform .38s cubic-bezier(.16,1,.3,1), box-shadow .35s ease-in-out;
+/* borda aplicada à wrapper para "acompanhar" o tilt 3D */
+border: 1px solid rgba(255,255,255,0.03);
+background-clip: padding-box;
+}
+
+/* cover-image preenche toda a wrapper (suporta <img> ou background) */
+.wrapper > .cover-image,
+.wrapper img.cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* usa a variável para que você possa ajustar o foco por projeto */
+  object-position: var(--cover-position);
+  display: block;
+  transform: skewX(.001deg); /* subtil para forçar GPU e prevenir artefatos */
+  will-change: transform, opacity, filter;
+  transition: transform .35s ease-in-out, opacity .35s ease-in-out, filter .45s ease-in-out;
+  /* Default: imagem esmaecida e desfocada com overlay escuro por cima */
+  /* blur reduzido para preservar mais da imagem visível */
+  filter: blur(4px) brightness(0.6) saturate(0.9);
+  opacity: 1;
+}
+
+/* Overlay/gradiente em cima da imagem (escuro por padrão) */
+.wrapper::after {
+  content: '';
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  background: linear-gradient(180deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.38) 40%, rgba(0,0,0,0.6) 100%);
+  transform: translateY(0%);
+  will-change: opacity, transform;
+  transition: transform .45s cubic-bezier(0.18, 0.9, 0.58, 1), opacity .35s ease;
+  pointer-events: none;
+  opacity: 1;
+}
+
+/* Sombra/volume atrás do cartão */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  height: 90%;
+  background: rgba(0,0,0,0.5);
+  box-shadow: 0 6px 12px 12px rgba(0,0,0,0.4);
+  transform-origin: top center;
+  transform: skewX(.001deg);
+  transition: transform .35s ease-in-out, opacity .5s ease-in-out;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* hover: menos intenso; JS pode continuar aplicando tilt dinâmico */
+.card:hover {
+  transform: scale(0.995); /* ainda muito sutil */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.36);
+}
+.card:hover .wrapper {
+  /* tilt menos intenso; translateZ menor para afastar sutilmente */
+  transform: perspective(900px) translateY(2%) rotateX(3deg) translateZ(var(--tilt-z));
+  box-shadow: 0 10px 22px -8px rgba(0,0,0,0.40);
+}
+.card:hover .wrapper::after {
+  transform: translateY(0%);
+}
+
+/* hover da sombra (leve) */
+.card:hover::before {
+  opacity: 0.45;
+  transform: translateY(2px) scale(0.995);
+}
+
+/* título ocupa largura do cartão, visível sobre a imagem */
+.title {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) translateY(6px) scale(.98);
+	opacity: 1;
+	z-index: 12;
+	transition: transform 420ms cubic-bezier(.16,1,.3,1), opacity 320ms ease, color 240ms ease;
+	color: var(--card-title-color);
+	font-weight: 700;
+	font-size: 1.05rem;
+	text-align: center;
+	text-shadow: 0 8px 22px rgba(0,0,0,0.65);
+	pointer-events: none;
+	background: transparent;
+}
+.card:hover .title {
+	opacity: 0;
+	transform: translate(-50%, -60%) translateZ(48px) scale(0.98);
+}
+
+/* remova/ignore a character secundária (se ainda existir no HTML, esconda) */
+.character { display: none !important; }
+
+/* badges sutis no topo, se existirem */
+.card-tags {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display:flex;
+  gap:6px;
+  z-index: 5;
+  pointer-events: none; /* tags internas servem mais para visual; cada badge click será provido por botão separado se quiser */
+}
+.card-tags .tag {
+  pointer-events: auto;
+  padding:4px 8px;
+  font-size:0.7rem;
+  background: rgba(0,0,0,0.5);
+  color:var(--cor-texto);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* responsividade: diminui o card em telas pequenas */
+@media(max-width:520px){
+  :root { --card-height: 240px; }
+}
+
+/* ...existing code... */
+.filter-row {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin: 1.2rem auto;
+  max-width: calc(var(--card-width) * 6 + 160px);
+  padding: 0 16px;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center; /* centraliza a barra de pesquisa */
+  flex-wrap: nowrap;
+}
+
+/* em telas pequenas volta a coluna */
+@media (max-width:719px){
+  .filter-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+}
+
+/* Wrapper visual para a busca (mantém tamanho e margens) */
+.search-input {
+  flex: 0 0 420px;
+  min-width: 160px;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid var(--search-border); /* usa a variável definida em base */
+  background: var(--search-bg);
+  color: var(--cor-texto);
+  font-size:1rem;
+  outline: none;
+  box-shadow: none;
+  margin: 0 auto; /* adicional para centralizar quando espaço disponível */
+}
+
+/* adapta em mobile para ocupar largura */
+@media(max-width:719px){
+  .search-input { width:100%; flex: 1 1 auto; }
+}
+
+/* esconder a barra de tags globais (fica apenas a busca) */
+.global-tags {
+  display: none; /* mantido: não mostrar tags ao lado da barra de pesquisa */
+}
+
+/* escondendo scrollbar para maior limpeza */
+.global-tags::-webkit-scrollbar { height: 8px; }
+.global-tags::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 8px; }
+.global-tags { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent; }
+
+/* fade nas laterais para indicar rolagem (apenas quando necessário) */
+.global-tags::before,
+.global-tags::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 36px;
+  pointer-events: none;
+  transition: opacity .25s;
+}
+.global-tags::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(11,11,11,1), rgba(11,11,11,0));
+}
+.global-tags::after {
+  right: 0;
+  background: linear-gradient(-90deg, rgba(11,11,11,1), rgba(11,11,11,0));
+}
+
+/* quando não precisar de fade (ex.: wrap em mobile), deixamos transparente */
+@media (max-width:719px){
+  .global-tags::before, .global-tags::after { opacity: 0; display: none; }
+}
+
+/* pequenos ajustes visuais para os chips de tag */
+.tag {
+  white-space: nowrap;
+  padding:6px 10px;
+  font-size:0.83rem;
+  border-radius:999px;
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  cursor:pointer;
+  user-select:none;
+  border:1px solid rgba(255,255,255,0.03);
+  transition: transform 0.12s, background 0.18s;
+  flex: 0 0 auto; /* evita que encolham na faixa rolável */
+}
+.tag:hover { transform: translateY(-3px); }
+
+/* estado ativo mais visível */
+.tag[data-active="true"] {
+  background: rgba(255,255,255,0.16);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+  transform: translateY(-2px);
+}
+
+/* Reveal on scroll - estado inicial e transição */
+.js-reveal,
+.js-reveal-up {
+  opacity: 0;
+  transform: translateY(18px) scale(0.99);
+  filter: blur(4px);
+  transition: transform 420ms cubic-bezier(.22,.9,.35,1), opacity 420ms ease, filter 420ms ease;
+  will-change: transform, opacity, filter;
+}
+.is-visible.js-reveal,
+.is-visible.js-reveal-up {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+/* Grid de cards: 6 colunas no desktop, 2 no celular */
+.cards-grid {
+  display: grid;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 1.2rem;
+  padding: 0 16px 48px;
+  /* padrão: 4 colunas responsivas entre mobile e desktop */
+  grid-template-columns: repeat(3, var(--card-width));
+}
+
+/* desktop amplo: 6 colunas */
+@media (min-width: 1400px) {
+  .cards-grid {
+    grid-template-columns: repeat(6, var(--card-width));
+  }
+}
+
+/* médio: 4 colunas */
+@media (min-width: 1000px) and (max-width: 1399px) {
+  .cards-grid {
+    grid-template-columns: repeat(4, var(--card-width));
+  }
+}
+
+/* tablet: 3 colunas */
+@media (min-width: 720px) and (max-width: 999px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, var(--card-width));
+  }
+}
+
+/* celular: 2 colunas */
+@media (max-width: 719px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(calc((100% - 24px) / 2), var(--card-width)));
+    justify-items: center;
+  }
+}
+
+/* esconder badges dentro do card */
+.card-tags {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display:flex;
+  gap:6px;
+  z-index: 5;
+  pointer-events: none; /* tags internas servem mais para visual; cada badge click será provido por botão separado se quiser */
+}
+.card-tags .tag {
+  pointer-events: auto;
+  padding:4px 8px;
+  font-size:0.7rem;
+  background: rgba(0,0,0,0.5);
+  color:#fff;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* responsividade: diminui o card em telas pequenas */
+@media(max-width:520px){
+  :root { --card-height: 240px; }
+}
+
+.card:hover .wrapper > .cover-image,
+.card:hover .wrapper img.cover-image {
+  /* revelar imagem: remover blur/brilho aplicado por padrão */
+  filter: none !important;
+  transform: none !important;
+  transition-delay: 0s;
+}
+
+/* ocultar overlay/gradiente escuro que estava cobrindo a imagem */
+.card:hover .wrapper::after {
+  opacity: 0 !important;
+  transform: translateY(-6%);
+  transition: opacity .35s ease, transform .45s cubic-bezier(0.18, 0.9, 0.58, 1);
+}
+
+/* Overrides específicos para Light Mode */
+body.light-mode .page-title {
+  color: #000000; /* título "Projects" totalmente preto no tema claro */
+}
+
+body.light-mode .search-input {
+  color: #000000; /* texto do input preto no tema claro */
+  background: var(--search-bg); /* mantém o fundo definido nas variáveis */
+  border-color: var(--search-border);
+}
+
+body.light-mode .search-input::placeholder,
+body.light-mode .search-input::-webkit-input-placeholder,
+body.light-mode .search-input:-ms-input-placeholder {
+  color: #000000; /* placeholder em inglês completamente preto no tema claro */
+}
+
+/* Melhorias de espaçamento em mobile para evitar que os cards fiquem colados */
+@media (max-width: 719px) {
+  /* usar colunas fluidas e gutter lateral */
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* duas colunas flexíveis */
+    gap: 18px 12px; /* row-gap 18px, column-gap 12px */
+    padding: 0 14px 36px; /* espaço lateral para "gutter" */
+    justify-items: stretch;
+  }
+
+  /* cada card ocupa toda a célula, sem margens laterais que causavam overflow */
+  .card {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 12px; /* espaço interno para não colar na borda do grid */
+    box-sizing: border-box;
+  }
+
+
+
+  /* em telas bem estreitas, alternar para 1 coluna */
+  @media (max-width: 420px) {
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 0 12px 28px;
+    }
+    .card { padding: 0 10px; }
+  }
+}
+
+/* opções rápidas por cartão: usar attribute data-focus para ajustar sem editar CSS */
+.card[data-focus="top"] .cover-image { object-position: center top; }
+.card[data-focus="center"] .cover-image { object-position: center center; }
+.card[data-focus="bottom"] .cover-image { object-position: center bottom; }
