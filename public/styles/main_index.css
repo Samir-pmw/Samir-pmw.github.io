@@ -1,7 +1,0 @@
-/* Arquivo principal que importa todos os outros módulos */
-@import "public/styles/utils/_animations.css";
-@import "public/styles/base/_base.css";
-@import "public/styles/components/_header.css";
-@import "public/styles/components/_settings.css"; /* ADICIONADO */
-@import "public/styles/components/_perfil.css";
-@import "public/styles/components/_about.css";

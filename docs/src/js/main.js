@@ -472,99 +472,132 @@ function exhaustiveInitHeaderToggles(headerContainer = document) {
 }
 
 async function loadAndInit() {
-    const includePlaceholders = Array.from(document.querySelectorAll('[data-include]'));
+    const headerPlaceholder = document.querySelector('[data-include="header.html"]');
 
-    if (!includePlaceholders.length) {
-        console.error('CRITICAL: no [data-include] placeholders found.');
+    if (!headerPlaceholder) {
+        console.error('CRITICAL: Header placeholder [data-include="header.html"] not found.');
         return;
     }
 
-    // Para cada placeholder tenta carregar o arquivo indicado por data-include
-    await Promise.all(includePlaceholders.map(async (ph) => {
-        const attr = ph.dataset.include && ph.dataset.include.trim();
-        const candidates = [];
-
-        // Se o atributo for um caminho absoluto (começa com /) usa direto
-        if (attr && attr.startsWith('/')) candidates.push(attr);
-        // Tenta o próprio valor (ex: "header.html" ou "components/header.html")
-        if (attr) candidates.push(attr);
-
-        // caminhos relativos/absolutos comuns para este projeto
-        candidates.push('components/header.html', './components/header.html', '../components/header.html');
-        candidates.push('/public/pages/components/header.html', 'public/pages/components/header.html', 'public/pages/header.html');
-        candidates.push('../public/pages/components/header.html', '../../public/pages/components/header.html');
-
-        // remove duplicados
-        const tried = [];
-        let response = null;
-        for (const p of candidates.filter(Boolean)) {
-            if (tried.includes(p)) continue;
-            tried.push(p);
-            try {
-                response = await fetch(p);
-                if (response && response.ok) {
-                    break;
-                }
-            } catch (e) {
-                // ignore and try next
-            }
+    try {
+        const response = await fetch('components/header.html');
+        if (!response.ok) {
+            throw new Error(`Failed to fetch header.html: ${response.statusText}`);
         }
+        const headerHtml = await response.text();
+        headerPlaceholder.innerHTML = headerHtml;
 
-        if (!response || !response.ok) {
-            console.error('Header fetch failed. Tried:', tried.join(', '));
-            ph.innerHTML = '<!-- header load failed -->';
-            return;
-        }
-
-        const html = await response.text();
-        ph.innerHTML = html;
-
-        // Inicializa scripts/menus no contexto do header injetado
+        // GARANTIA: Espera o navegador processar a injeção do HTML
         requestAnimationFrame(() => {
-            try { initExplicitSettingsMenu(ph); } catch(e) { console.error('initExplicitSettingsMenu failed:', e); }
-            try { debugHeaderElements(ph); } catch (e) { console.error('debugHeaderElements failed:', e); }
+            console.log("DOM ready after header injection. Initializing scripts.");
 
+            // Inicializa imediatamente o menu de configurações simples
+            try { initExplicitSettingsMenu(headerPlaceholder); } catch(e) { console.error('initExplicitSettingsMenu failed:', e); }
+
+            // ADICIONA: debug do header injetado para identificar classes/atributos reais
+            try {
+                debugHeaderElements(headerPlaceholder);
+            } catch (e) {
+                console.error('debugHeaderElements failed:', e);
+            }
+            
+            // Agora os elementos existem e podem ser encontrados
             try {
                 if (typeof initNavbar === 'function') {
-                    try { initNavbar(ph); } catch (e) { try { initNavbar(); } catch(e2){ console.error('initNavbar failed:', e, e2); } }
+                    try {
+                        // tenta inicializar passando o header como escopo (se suportado)
+                        initNavbar(headerPlaceholder);
+                    } catch (errWithContainer) {
+                        // fallback: tenta sem container
+                        try {
+                            initNavbar();
+                        } catch (errNoContainer) {
+                            console.error('initNavbar failed (with container and without):', errWithContainer, errNoContainer);
+                        }
+                    }
+                } else {
+                    console.warn('initNavbar is not a function', initNavbar);
                 }
-            } catch(e) { console.error('initNavbar unexpected error', e); }
+            } catch (e) {
+                console.error('Unexpected error while calling initNavbar:', e);
+            }
 
             try {
                 if (typeof initSettings === 'function') {
-                    try { initSettings(ph); } catch (e) { try { initSettings(); } catch(e2){ console.error('initSettings failed:', e, e2); } }
+                    try {
+                        initSettings(headerPlaceholder);
+                    } catch (errWithContainer) {
+                        try {
+                            initSettings();
+                        } catch (errNoContainer) {
+                            console.error('initSettings failed (with container and without):', errWithContainer, errNoContainer);
+                        }
+                    }
+                } else {
+                    console.warn('initSettings is not a function', initSettings);
                 }
-            } catch(e) { console.error('initSettings unexpected error', e); }
+            } catch (e) {
+                console.error('Unexpected error while calling initSettings:', e);
+            }
 
-            try { initMenuClosers(); } catch(e){ console.error('initMenuClosers failed', e); }
-            try { initToggleHandlers(ph); } catch(e){ try { initToggleHandlers(); } catch(e2){ console.error('initToggleHandlers failed', e, e2); } }
+            // Tentativa de manter fechamento/abertura do menu mesmo que initNavbar falhe
+            try { initMenuClosers(); } catch (e) { console.error('initMenuClosers failed:', e); }
 
-            // fallback strategies
-            try {
-                const foundToggle = ph.querySelector('.mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle], [data-toggle="mobile"], [data-toggle="mobile-nav"]') || document.querySelector('.mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle], [data-toggle="mobile"], [data-toggle="mobile-nav"]');
-                const foundMenu = ph.querySelector('.mobile-nav, .mobile-menu, #mobile-nav, .nav--mobile') || document.querySelector('.mobile-nav, .mobile-menu, #mobile-nav, .nav--mobile');
-                if (!foundToggle || !foundMenu) {
-                    fallbackInitMobileFromHeader(ph);
-                    const anyToggleAfter = ph.querySelector('[data-toggle-init], .mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle]') || document.querySelector('[data-toggle-init], .mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle]');
-                    if (!anyToggleAfter) exhaustiveInitHeaderToggles(ph);
+            // Inicializa handlers adicionais de toggle (passa o headerPlaceholder como container)
+            try { initToggleHandlers(headerPlaceholder); } catch (e) { 
+                try { initToggleHandlers(); } catch (e2) {
+                    console.error('initToggleHandlers failed (with container and without):', e, e2);
                 }
-            } catch(e){ console.error('mobile fallback failed', e); }
+            }
 
-            try {
-                const foundSettingsToggle = ph.querySelector('.settings-toggle, .settings-button, [data-settings-toggle], [data-toggle="settings"]') || document.querySelector('.settings-toggle, .settings-button, [data-settings-toggle], [data-toggle="settings"]');
-                const foundSettingsMenu = ph.querySelector('.settings-menu, #settings-menu, .settings-panel') || document.querySelector('.settings-menu, #settings-menu, .settings-panel');
-                if (!foundSettingsToggle || !foundSettingsMenu) {
-                    fallbackInitSettingsFromHeader(ph);
-                    const anySettingsAfter = ph.querySelector('.settings-toggle, [data-settings-toggle]') || document.querySelector('.settings-toggle, [data-settings-toggle]');
-                    if (!anySettingsAfter) exhaustiveInitHeaderToggles(ph);
+            // Se navbar.js/others não tenham criado um toggle funcional, instala fallback
+            const foundToggle = headerPlaceholder.querySelector('.mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle], [data-toggle="mobile"], [data-toggle="mobile-nav"]')
+                              || document.querySelector('.mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle], [data-toggle="mobile"], [data-toggle="mobile-nav"]');
+            const foundMenu = headerPlaceholder.querySelector('.mobile-nav, .mobile-menu, #mobile-nav, .nav--mobile')
+                             || document.querySelector('.mobile-nav, .mobile-menu, #mobile-nav, .nav--mobile');
+
+            if (!foundToggle || !foundMenu) {
+                console.info('No mobile toggle/menu found by existing scripts — applying fallback initializer.');
+                fallbackInitMobileFromHeader(headerPlaceholder);
+
+                // Se o fallback específico também não encontrar, tenta busca exaustiva genérica
+                const anyToggleAfter = headerPlaceholder.querySelector('[data-toggle-init], .mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle]') || document.querySelector('[data-toggle-init], .mobile-nav-toggle, .hamburger, .nav-toggle, [data-mobile-toggle]');
+                if (!anyToggleAfter) {
+                    console.info('Applying exhaustive header detection as additional fallback.');
+                    exhaustiveInitHeaderToggles(headerPlaceholder);
                 }
-            } catch(e){ console.error('settings fallback failed', e); }
+            }
 
-            try { ensureSettingsMenuSimplified(ph); } catch(e){ console.warn('ensureSettingsMenuSimplified falhou', e); }
-            try { injectLightMenuOverrideOnce(); } catch(e){ console.warn('injectLightMenuOverrideOnce falhou', e); }
-            try { setupMenuThemeSync(); } catch(e){ /* optional */ }
+            // NOVO: verifica e aplica fallback para settings/engrenagem se necessário
+            const foundSettingsToggle = headerPlaceholder.querySelector('.settings-toggle, .settings-button, [data-settings-toggle], [data-toggle="settings"]')
+                                    || document.querySelector('.settings-toggle, .settings-button, [data-settings-toggle], [data-toggle="settings"]');
+            const foundSettingsMenu = headerPlaceholder.querySelector('.settings-menu, #settings-menu, .settings-panel')
+                                  || document.querySelector('.settings-menu, #settings-menu, .settings-panel');
+
+            if (!foundSettingsToggle || !foundSettingsMenu) {
+                console.info('No settings toggle/menu found by existing scripts — applying settings fallback initializer.');
+                fallbackInitSettingsFromHeader(headerPlaceholder);
+
+                const anySettingsAfter = headerPlaceholder.querySelector('.settings-toggle, [data-settings-toggle]') || document.querySelector('.settings-toggle, [data-settings-toggle]');
+                if (!anySettingsAfter) {
+                    console.info('Applying exhaustive header detection for settings as additional fallback.');
+                    exhaustiveInitHeaderToggles(headerPlaceholder);
+                }
+            }
+
+            // NOVO: garantir menu de configurações simples antes de outras estratégias
+            try { ensureSettingsMenuSimplified(headerPlaceholder); } catch(e) { console.warn('ensureSettingsMenuSimplified falhou', e); }
+
+            try { injectLightMenuOverrideOnce(); } catch(e) { console.warn('injectLightMenuOverrideOnce falhou', e); }
+
+            try { setupMenuThemeSync(); } catch(e){ console.warn('setupMenuThemeSync falhou', e); }
+
+            console.log("Scripts initialized successfully.");
         });
-    }));
+
+    } catch (error) {
+        console.error("CRITICAL ERROR during page initialization:", error);
+    }
 }
 
 // NOVO: criação/garantia simplificada do menu de configurações
