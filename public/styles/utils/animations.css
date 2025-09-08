@@ -31,12 +31,12 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(20px); /* Movido de translateX(-50%) translateY(20px) */
+        transform: translateY(20px);
         filter: blur(5px);
     }
     to {
         opacity: 1;
-        transform: translateY(0); /* Movido de translateX(-50%) translateY(0) */
+        transform: translateY(0);
         filter: blur(0);
     }
 }
@@ -47,13 +47,13 @@
   100% { transform: scale(1); }
 }
 
-/* NOVO: Animação para o cursor piscando */
+/* Animação para o cursor piscando */
 @keyframes blink {
   from, to { background-color: transparent; }
   50% { background-color: #a0a0a0; }
 }
 
-/* NOVO: Animação para o indicador de scroll */
+/* Animação para o indicador de scroll */
 @keyframes subtle-float {
     0%, 100% {
         opacity: 0.5;

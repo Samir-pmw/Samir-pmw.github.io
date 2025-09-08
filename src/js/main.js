@@ -1179,6 +1179,19 @@ function initMenuThemeWatcher() {
     obs.observe(document.body, { attributes:true, attributeFilter:['class','data-theme'] });
 }
 
+// NEW: Public small API used by other modules; sets up initial sync and watcher
+function setupMenuThemeSync() {
+    try {
+        applyMenuTheme();
+        initMenuThemeWatcher();
+        // ensure light menus if body already light
+        forceLightMenusOnce();
+        console.info('setupMenuThemeSync completed');
+    } catch (e) {
+        console.warn('setupMenuThemeSync encountered an error', e);
+    }
+}
+
 // GARANTE: chama initMenuThemeWatcher e forceLightMenusOnce após loadAndInit
 document.addEventListener('readystatechange', () => {
     if (document.readyState === 'complete') {
