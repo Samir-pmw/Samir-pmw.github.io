@@ -1,0 +1,85 @@
+/* Seção About compacta e link para página completa */
+.about {
+    max-width: 65ch;
+    margin: 25vh auto;
+    padding: 0 24px;
+    text-align: left;
+}
+
+.projects-summary{
+    max-width: 65ch;
+    margin: 25vh auto;
+    padding: 0 24px;
+    text-align: left;
+}
+.contact-summary{
+    max-width: 65ch;
+    margin: 25vh auto;
+    padding: 0 24px;
+    text-align: left;
+}
+
+.about__titulo {
+    font-size: clamp(18px, 3vw, 22px);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--cor-texto);
+    margin-bottom: 24px;
+}
+
+.about__text {
+    font-size: clamp(18px, 2.5vw, 24px);
+    line-height: 1.6;
+    color: #888;
+    margin: 0;
+}
+
+.about__text strong {
+    font-weight: 600;
+    color: var(--cor-texto);
+}
+
+.about__link {
+    display: inline-block;
+    margin-top: 24px;
+    color: #888;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease,
+                opacity 0.6s ease-out,
+                transform 0.6s ease-out,
+                filter 0.6s ease-out;
+}
+
+.about__link:hover {
+    color: var(--cor-texto);
+    transform: translateX(4px);
+}
+
+/* Página About completa */
+.page-content {
+    max-width: 800px;
+    margin: 5vh auto;
+    padding: 0 24px;
+}
+
+.about-full__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--cor-texto);
+    margin-bottom: 32px;
+}
+
+.about-full__text {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.8;
+    color: #aaa;
+    margin-bottom: 24px;
+}
+
+/* Media Query */
+@media (max-width: 768px) {
+    .about {
+        margin: 15vh auto;
+    }
+}

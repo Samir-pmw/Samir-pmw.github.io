@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samir B. dos Santos</title>
+    <link rel="stylesheet" href="public/styles/utils/_animations.css">
+    <link rel="stylesheet" href="public/styles/base/_base.css">
+    <link rel="stylesheet" href="public/styles/components/_header.css">
+    <link rel="stylesheet" href="public/styles/components/_settings.css">
+    <link rel="stylesheet" href="public/styles/components/_perfil.css">
+    <link rel="stylesheet" href="public/styles/components/_about.css">
+    <link rel="stylesheet" href="public/styles/about.css">
+    <link rel="icon" href="assets/images/icons/favicon.ico">
+</head>
+<body>
+    <div data-include="public/pages/components/header.html"></div>
+    <section class="perfil js-reveal" id="perfil">
+        <img class="perfil__foto js-reveal" src="assets/images/profile/profile.jpg" alt="Samir profile photo" draggable="false">
+        <p class="perfil__cargo js-reveal" id="typing-animation-container">
+            <span class="typing-text"></span><span class="cursor">&nbsp;</span>
+        </p>
+        <h1 class="perfil__titulo js-reveal">Samir B. dos Santos</h1>
+        <p class="perfil__localizacao js-reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+            Palmas, Tocantins
+        </p>
+        <div class="perfil__redes js-reveal">
+          <!-- Discord: copia a tag -->
+          <a href="#" class="copy-btn" data-copy="papiro.dev" title="Copy Discord tag" aria-label="Copy Discord tag">
+            <img src="assets/images/icons/discord.webp"
+                 data-src-dark="assets/images/icons/discord.webp"
+                 data-src-light="assets/images/icons/discord_black.webp"
+                 alt="Discord icon" draggable="false">
+          </a>
+          <!-- LinkedIn: abre no perfil -->
+          <a href="https://www.linkedin.com/in/samir-batista-517139217/" target="_blank" rel="noopener noreferrer" title="LinkedIn" aria-label="LinkedIn">
+            <img src="assets/images/icons/linkedin.png"
+                 data-src-dark="assets/images/icons/linkedin.png"
+                 data-src-light="assets/images/icons/linkedin_black.png"
+                 alt="LinkedIn icon" draggable="false">
+          </a>
+          <a href="https://github.com/Samir-pmw" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="GitHub">
+            <img src="assets/images/icons/github.png"
+                 data-src-dark="assets/images/icons/github.png"
+                 data-src-light="assets/images/icons/github_black.png"
+                 alt="GitHub icon" draggable="false">
+          </a>
+          <!-- Gmail: copia o e‑mail -->
+          <a href="#" class="copy-btn" data-copy="samirbatistasantos@gmail.com" title="Copy email" aria-label="Copy email">
+            <img src="assets/images/icons/gmail.png"
+                 data-src-dark="assets/images/icons/gmail.png"
+                 data-src-light="assets/images/icons/gmail_black.png"
+                 alt="Gmail icon" draggable="false">
+          </a>
+        </div>
+        <div class="scroll-indicator js-reveal">
+            <div class="scroll-indicator__arrow"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+    <section class="about" id="about">
+        <h2 class="about__titulo js-reveal-up">ABOUT</h2>
+        <p class="about__text js-reveal-up">
+            I believe great software isn't just about code it's about the experience it creates. I'm <strong>Samir Batista</strong>, a Computer Science student with a passion for crafting digital solutions that are both functional and intuitive.
+        </p>
+        <a href="public/pages/about.html" class="about__link js-reveal-up">View More &rarr;</a>
+    </section>
+    <!-- Projects mini-summary -->
+    <section class="projects-summary js-reveal-up" aria-labelledby="projects-summary-title">
+        <h2 id="projects-summary-title" class="about__titulo">PROJECTS</h2>
+        <p class="about__text">
+            Small selection of my work: a Discord bot with modular commands and a GitHub portfolio showcasing experiments and utilities. I focus on clean, maintainable code and practical tooling.
+        </p>
+        <a href="public/pages/projects.html" class="about__link js-reveal-up" aria-label="View projects">View More &rarr;</a>
+    </section>
+    <!-- Contact mini-summary -->
+    <section class="contact-summary js-reveal-up" aria-labelledby="contact-summary-title">
+        <h2 id="contact-summary-title" class="about__titulo">CONTACT</h2>
+        <p class="about__text">
+            Reach out via LinkedIn or email for collaborations. Quick actions available on the contact page (copy tag/email, open WhatsApp).
+        </p>
+        <a href="public/pages/contact.html" class="about__link js-reveal-up" aria-label="View contact">View More &rarr;</a>
+    </section>
+    <script type="module" src="src/js/main.js" defer></script>
+    <script type="module" src="src/js/contact.js" defer></script>
+    <!-- html-loader and inline imports removed: main.js imports and initializes navbar/settings -->
+    <script>
+    // Ajusta ícones conforme tema
+    (function(){
+        function applyThemeIcons(){
+            const light = document.body.classList.contains('light-mode');
+            document.querySelectorAll('.perfil__redes img[data-src-light][data-src-dark]').forEach(img=>{
+                const target = light ? img.dataset.srcLight : img.dataset.srcDark;
+                if(img.src !== target) img.src = target;
+            });
+        }
+        document.addEventListener('DOMContentLoaded', applyThemeIcons);
+        document.addEventListener('click', (e)=>{
+            if(e.target && e.target.id === 'theme-toggle') setTimeout(applyThemeIcons, 0);
+        });
+        new MutationObserver(applyThemeIcons).observe(document.body,{attributes:true,attributeFilter:['class']});
+    })();
+    </script>
+</body>
+</html>

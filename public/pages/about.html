@@ -1,0 +1,181 @@
+<!-- Página About: perfil estendido, skills, stack, timeline, educação e CTA -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Samir Batista</title>
+    <link rel="stylesheet" href="../styles/utils/_animations.css">
+    <link rel="stylesheet" href="../styles/base/_base.css">
+    <link rel="stylesheet" href="../styles/components/_header.css">
+    <link rel="stylesheet" href="../styles/components/_settings.css">
+    <link rel="stylesheet" href="../styles/components/_perfil.css">
+    <link rel="stylesheet" href="../styles/components/_about.css">
+    <link rel="stylesheet" href="../styles/about.css">
+    <link rel="prefetch" href="header.html">
+    <link rel="icon" href="../../assets/images/icons/favicon.ico">
+    <style>
+        .header-placeholder {height:120px;}
+        @media (max-width:768px){ .header-placeholder{height:80px;} }
+        /* reuse button styles so About shows same "Get" visual as Contact */
+        .btn, .btn.primary {
+          padding:8px 10px;
+          border-radius:8px;
+          border:1px solid rgba(255,255,255,0.06);
+          background: transparent;
+          color: var(--cor-texto);
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          text-decoration: none;
+        }
+        .btn.primary { background: var(--link-color); color: #fff; border: none; }
+    </style>
+</head>
+<body>
+    <div data-include="header.html"></div>
+    <div class="header-placeholder"></div>
+    <main class="page-content js-reveal">
+        <!-- Introdução -->
+        <section class="about-full">
+            <h1 class="about-full__title js-reveal-up">About Me</h1>
+            <p class="about-full__text js-reveal-up">
+                Hello! I'm Samir Batista, a passionate Computer Science student based in Brazil. My journey into tech began with a fascination for how software can solve real-world problems and create meaningful experiences.
+            </p>
+            <p class="about-full__text js-reveal-up">
+                I’m a Computer Science student from Brazil driven by how software can turn abstract ideas into impactful, reliable systems.
+            </p>
+            <p class="about-full__text js-reveal-up">
+                My main focus is backend development with Python while expanding into modern web technologies (JavaScript, HTML, CSS) and software architecture fundamentals.
+            </p>
+            <p class="about-full__text js-reveal-up">
+                Outside coding I explore music, read technical and historical material, or prototype new ideas.
+            </p>
+        </section>
+        <!-- Blocos -->
+        <div class="about-sections">
+            <section class="about-block" id="skills">
+                <h2 class="about-block__title js-reveal-up">Core Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card js-reveal-up">
+                        <h3>Python</h3>
+                        <p>Backend APIs (FastAPI/Flask), automation & web scraping (Selenium), data structures in modular Discord bot features.</p>
+                        <div class="skill-bar"><span style="--p:80%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>JavaScript</h3>
+                        <p>Modular ES modules, interactive UI & animations, performant DOM patterns, progressive enhancement.</p>
+                        <div class="skill-bar"><span style="--p:40%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>HTML & CSS</h3>
+                        <p>Accessible layouts, responsive structure, semantic markup.</p>
+                        <div class="skill-bar"><span style="--p:70%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>Modularization</h3>
+                        <p>Splitting logic into reusable, isolated units for clearer maintenance and scaling.</p>
+                        <div class="skill-bar"><span style="--p:75%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>Organization</h3>
+                        <p>Consistent structure, naming discipline, task flow and asset curation.</p>
+                        <div class="skill-bar"><span style="--p:90%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>Documentation</h3>
+                        <p>Concise technical notes, in‑code clarity, process explanation and onboarding aids.</p>
+                        <div class="skill-bar"><span style="--p:90%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>Git & GitHub</h3>
+                        <p>Branch workflows, clean commits, pull reviews and collaborative history hygiene.</p>
+                        <div class="skill-bar"><span style="--p:70%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>Editing & Design Tools</h3>
+                        <p>Image/vector refinement, asset preparation, UI polish and export pipelines.</p>
+                        <div class="skill-bar"><span style="--p:85%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>C</h3>
+                        <p>Low-level logic fundamentals, memory perspective and procedural structuring.</p>
+                        <div class="skill-bar"><span style="--p:55%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>Java</h3>
+                        <p>Object-oriented patterns, basic tooling and structured problem decomposition.</p>
+                        <div class="skill-bar"><span style="--p:60%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>SQL</h3>
+                        <p>Relational modeling, querying patterns and data consistency focus.</p>
+                        <div class="skill-bar"><span style="--p:65%"></span></div>
+                    </div>
+                    <div class="skill-card js-reveal-up">
+                        <h3>English</h3>
+                        <p>Reading technical material, writing docs, moderate conversational proficiency.</p>
+                        <div class="skill-bar"><span style="--p:62%"></span></div>
+                    </div>
+                </div>
+            </section>
+            <section class="about-block" id="tech-stack">
+                <h2 class="about-block__title js-reveal-up">Tech Stack</h2>
+                <ul class="tech-badges js-reveal-up">
+                    <li class="badge">C</li><li class="badge">C#</li><li class="badge">CSS</li><li class="badge">Excel</li>
+                    <li class="badge">Git</li><li class="badge">GitHub</li><li class="badge">HTML</li><li class="badge">Java</li>
+                    <li class="badge">JavaScript</li><li class="badge">Modularization</li><li class="badge">PostgreSQL</li>
+                    <li class="badge">Python</li><li class="badge">SQL</li><li class="badge">Word</li>
+                </ul>
+            </section>
+            <section class="about-block" id="experience">
+                <h2 class="about-block__title js-reveal-up">Journey</h2>
+                <ol class="timeline">
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2018</span><h3>First exposure to programming logic</h3><p>Initial contact with core problem–solving and algorithmic thinking.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2020</span><h3>First Python + Selenium web scraping project</h3><p>Automated data extraction and structured parsing from target pages.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2021</span><h3>First game development experiment (C#)</h3><p>Learned event loops, entity states and basic rendering flow.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2022</span><h3>First website prototype</h3><p>Static layout, semantic HTML and foundational styling.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2023</span><h3>Historical & architectural computing study</h3><p>Dove into how computing evolved and why core abstractions exist.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2024</span><h3>First contact with GitHub</h3><p>Adopted version control workflows and remote collaboration basics.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2024</span><h3>Advanced Discord bot</h3><p>Implemented modular commands and custom data structure handling.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2025</span><h3>Public library systems deployment (pro bono)</h3><p>Delivered operational scripts and small tooling for community usage.</p></div></li>
+                    <li class="timeline__item js-reveal-up"><div class="timeline__dot"></div><div class="timeline__content"><span class="timeline__date">2025</span><h3>University acceptance (UFT)</h3><p>Began formal academic journey in Computer Science.</p></div></li>
+                </ol>
+            </section>
+            <section class="about-block" id="education">
+                <h2 class="about-block__title js-reveal-up">Education</h2>
+                <div class="edu-list">
+                    <div class="edu-item js-reveal-up"><h3>BSc in Computer Science</h3><p>Focus: logic, data structures, programming, software fundamentals.</p></div>
+                    <div class="edu-item js-reveal-up"><h3>Self‑Taught</h3><p>Official documentation, practical projects, exploration of new stacks.</p></div>
+                </div>
+            </section>
+            <section class="about-block cta-block js-reveal-up" id="contact">
+                <h2 class="about-block__title">Let’s Build Something</h2>
+                <p>Open to projects, collaboration and learning. Get in touch and let's build.</p>
+                <a class="cta-btn" href="contact.html">Contact &rarr;</a>
+            </section>
+        </div>
+    </main>
+    <script type="module" src="../../src/js/main.js" defer></script>
+    <script>
+    // Observa elementos e revela ao entrar na viewport
+    document.addEventListener('DOMContentLoaded', () => {
+        const els = document.querySelectorAll('.js-reveal, .js-reveal-up');
+        if (!('IntersectionObserver' in window)) {
+            els.forEach(el => el.classList.add('is-visible'));
+            return;
+        }
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(en => {
+                if (en.isIntersecting) {
+                    en.target.classList.add('is-visible');
+                    obs.unobserve(en.target);
+                }
+            });
+        }, { threshold: 0.15 });
+        els.forEach(el => obs.observe(el));
+    });
+    </script>
+</body>
+</html>

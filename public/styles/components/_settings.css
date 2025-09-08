@@ -1,0 +1,67 @@
+.settings-container {
+    position: relative;
+}
+
+.settings-toggle {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.settings-toggle:hover {
+    color: var(--cor-texto);
+}
+
+.settings-toggle svg {
+    stroke: currentColor;
+    display: block;
+}
+
+.settings-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 0;
+    background-color: var(--cor-fundo-menu);
+    border: 1px solid var(--cor-borda-menu);
+    border-radius: 8px;
+    padding: 8px;
+    width: 180px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 101;
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.settings-menu.is-open {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.settings-menu__btn {
+    font-family: inherit;
+    font-size: 14px;
+    background: none;
+    border: none;
+    color: #aaa;
+    text-decoration: none;
+    padding: 10px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+}
+
+.settings-menu__btn:hover {
+    background-color: var(--cor-hover-menu);
+    color: var(--cor-texto);
+}

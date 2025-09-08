@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — Samir Batista</title>
+  <link rel="stylesheet" href="../styles/utils/_animations.css">
+  <link rel="stylesheet" href="../styles/base/_base.css">
+  <link rel="stylesheet" href="../styles/components/_header.css">
+  <link rel="stylesheet" href="../styles/components/_settings.css">
+  <link rel="stylesheet" href="../styles/components/_perfil.css">
+  <link rel="stylesheet" href="../styles/components/_about.css">
+  <link rel="stylesheet" href="../styles/contact.css">
+  <link rel="icon" href="../../assets/images/icons/favicon.ico">
+</head>
+<body>
+  <div data-include="header.html"></div>
+  <div class="header-placeholder"></div>
+
+  <main class="contact-page page-content js-reveal">
+    <section class="contact-card">
+      <div class="contact-header">
+        <img src="../../assets/images/profile/profile.jpg" alt="Samir photo" draggable="false">
+        <div>
+          <h1>Get in touch — Samir Batista</h1>
+          <p class="note">Available for collaboration, freelance and pro‑bono community work.</p>
+        </div>
+      </div>
+
+      <div class="contact-grid">
+        <div>
+          <div class="contact-list" role="list" aria-label="Contact methods">
+
+            <!-- Discord (Get => copy + open) -->
+            <div class="contact-item" role="listitem">
+              <div class="contact-item__meta">
+                <img src="../../assets/images/icons/discord.webp"
+                     data-src-dark="../../assets/images/icons/discord.webp"
+                     data-src-light="../../assets/images/icons/discord_black.webp"
+                     alt="Discord">
+                <div class="contact-item__text">
+                  <h3>Discord</h3>
+                  <p>Tag: <strong>papiro.dev</strong></p>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn get-btn" data-copy="papiro.dev" data-href="https://discord.com" aria-label="Get Discord">Get</button>
+              </div>
+            </div>
+
+            <!-- LinkedIn (Get => open only) -->
+            <div class="contact-item" role="listitem">
+              <div class="contact-item__meta">
+                <img src="../../assets/images/icons/linkedin.png"
+                     data-src-dark="../../assets/images/icons/linkedin.png"
+                     data-src-light="../../assets/images/icons/linkedin_black.png"
+                     alt="LinkedIn">
+                <div class="contact-item__text">
+                  <h3>LinkedIn</h3>
+                  <p>Professional profile — connect for opportunities.</p>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn get-btn" data-href="https://www.linkedin.com/in/samir-batista-517139217/" aria-label="Get LinkedIn">Get</button>
+              </div>
+            </div>
+
+            <!-- GitHub (Get => open only) -->
+            <div class="contact-item" role="listitem">
+              <div class="contact-item__meta">
+                <img src="../../assets/images/icons/github.png"
+                     data-src-dark="../../assets/images/icons/github.png"
+                     data-src-light="../../assets/images/icons/github_black.png"
+                     alt="GitHub">
+                <div class="contact-item__text">
+                  <h3>GitHub</h3>
+                  <p>Repositories & projects — code samples and experiments.</p>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn get-btn" data-href="https://github.com/Samir-pmw" aria-label="Get GitHub">Get</button>
+              </div>
+            </div>
+
+            <!-- WhatsApp (Get => open WA and copy number) -->
+            <div class="contact-item" role="listitem">
+              <div class="contact-item__meta">
+                <img
+                    id="contact-whatsapp-icon"
+                    src="../../assets/images/icons/whatsapp.png"
+                    data-src-dark="../../assets/images/icons/whatsapp.png"
+                    data-src-light="../../assets/images/icons/whatsapp_black.png"
+                    alt="WhatsApp">
+                <div class="contact-item__text">
+                  <h3>WhatsApp</h3>
+                  <p>Message: <strong>+55 63 98419-4107</strong></p>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn get-btn" data-phone="63984194107" data-copy="+5563984194107" aria-label="Get WhatsApp">Get</button>
+              </div>
+            </div>
+
+            <!-- Email (Get => copy + mailto) -->
+            <div class="contact-item" role="listitem">
+              <div class="contact-item__meta">
+                <img src="../../assets/images/icons/gmail.png"
+                     data-src-dark="../../assets/images/icons/gmail.png"
+                     data-src-light="../../assets/images/icons/gmail_black.png"
+                     alt="Email">
+                <div class="contact-item__text">
+                  <h3>Email</h3>
+                  <p>samirbatistasantos@gmail.com</p>
+                </div>
+              </div>
+              <div class="contact-actions">
+                <button class="btn get-btn" data-copy="samirbatistasantos@gmail.com" data-href="mailto:samirbatistasantos@gmail.com" aria-label="Get Email">Get</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <aside>
+          <div class="contact-card" aria-labelledby="contact-info">
+            <h3 id="contact-info">Quick info</h3>
+            <p class="note">Timezone: Palmas, Tocantins (GMT-3)</p>
+            <p class="note">Preferred contact: LinkedIn / Email</p>
+            <hr style="border:none;border-top:1px solid rgba(255,255,255,0.04);margin:12px 0;">
+            <p style="margin:0 0 8px;">Also available:</p>
+            <ul style="margin:0;padding-left:18px;color:var(--muted-color);">
+              <li>Discord tag: papiro.dev</li>
+              <li>GitHub: github.com/Samir-pmw</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="btn about-contact" href="about.html" aria-label="About">About</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../../src/js/main.js" defer></script>
+  <script type="module" src="../../src/js/contact.js" defer></script>
+
+  <script>
+    // apply theme icons (dark/light) same behavior as home
+    function applyThemeIcons(){
+      const light = document.body.classList.contains('light-mode');
+      document.querySelectorAll('.contact-page img[data-src-light][data-src-dark]').forEach(img=>{
+        const target = light ? img.dataset.srcLight : img.dataset.srcDark;
+        if(target && img.src !== target) img.src = target;
+      });
+    }
+    document.addEventListener('DOMContentLoaded', applyThemeIcons);
+    new MutationObserver(applyThemeIcons).observe(document.body,{attributes:true,attributeFilter:['class']});
+  </script>
+</body>
+</html>
